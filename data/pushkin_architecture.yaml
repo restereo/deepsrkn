@@ -1,0 +1,27 @@
+class_mode: categorical
+layers:
+- activation: tanh
+  forget_bias_init: one
+  init: glorot_uniform
+  inner_activation: hard_sigmoid
+  inner_init: orthogonal
+  input_dim: null
+  input_length: null
+  input_shape: !!python/tuple [40, 121]
+  name: LSTM
+  output_dim: 512
+  return_sequences: true
+  truncate_gradient: -1
+- {name: Dropout, p: 0.2}
+- {activation: tanh, forget_bias_init: one, init: glorot_uniform, inner_activation: hard_sigmoid,
+  inner_init: orthogonal, input_dim: null, input_length: null, name: LSTM, output_dim: 512,
+  return_sequences: false, truncate_gradient: -1}
+- {name: Dropout, p: 0.2}
+- {W_constraint: null, W_regularizer: null, activation: linear, activity_regularizer: null,
+  b_constraint: null, b_regularizer: null, init: glorot_uniform, input_dim: null,
+  name: Dense, output_dim: 121}
+- {activation: softmax, beta: 0.1, name: Activation, target: 0}
+loss: categorical_crossentropy
+name: Sequential
+optimizer: {epsilon: 1.0e-06, lr: 0.0010000000474974513, name: RMSprop, rho: 0.8999999761581421}
+theano_mode: null
